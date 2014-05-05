@@ -2085,7 +2085,7 @@ proc makewindow {} {
     set file {
 	mc "&File" cascade {
 	    {mc "&Update" command updatecommits -accelerator F5}
-	    {mc "&Reload" command reloadcommits -accelerator Shift-F5}
+	    {mc "&Reload" command reloadcommits -accelerator Meta1-R}
 	    {mc "Reread re&ferences" command rereadrefs}
 	    {mc "&List references" command showrefs -accelerator F2}
 	    {xx "" separator}
@@ -2576,6 +2576,10 @@ proc makewindow {} {
     bind . <$M1B-Key-Down> "allcanvs yview scroll 1 units"
     bind . <$M1B-Key-Prior> "allcanvs yview scroll -1 pages"
     bind . <$M1B-Key-Next> "allcanvs yview scroll 1 pages"
+    bind . <Alt-Key-Up>   "$ctext yview scroll -1 units"
+    bind . <Alt-Key-Down> "$ctext yview scroll +1 units"
+    bind . <Shift-Alt-Key-Up>   "$ctext yview scroll -4 units"
+    bind . <Shift-Alt-Key-Down> "$ctext yview scroll +4 units"
     bindkey <Key-Delete> "$ctext yview scroll -1 pages"
     bindkey <Key-BackSpace> "$ctext yview scroll -1 pages"
     bindkey <Key-space> "$ctext yview scroll 1 pages"
@@ -2597,14 +2601,16 @@ proc makewindow {} {
     bindkey ? {dofind -1 1}
     bindkey f nextfile
     bind . <F5> updatecommits
-    bindmodfunctionkey Shift 5 reloadcommits
+    bind . <$M1B-r> reloadcommits
     bind . <F2> showrefs
     bindmodfunctionkey Shift 4 {newview 0}
     bind . <F4> edit_or_newview
     bind . <$M1B-q> doquit
     bind . <$M1B-f> {dofind 1 1}
     bind . <$M1B-g> {dofind 1 0}
-    bind . <$M1B-r> dosearchback
+    bind . <Shift-$M1B-s> dosearchback
+    bind . <Shift-$M1B-S> dosearchback
+    bind . <$M1B-S> dosearchback
     bind . <$M1B-s> dosearch
     bind . <$M1B-equal> {incrfont 1}
     bind . <$M1B-plus> {incrfont 1}
