@@ -12660,6 +12660,10 @@ if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {}} {
 if {[info exists permviews]} {
     foreach v $permviews {
 	set n $nextviewnum
+	if {$selectedview eq 0} {
+	    set curview $n
+	    set selectedview $n
+	}
 	incr nextviewnum
 	set viewname($n) [lindex $v 0]
 	set viewfiles($n) [lindex $v 1]
