@@ -2477,13 +2477,16 @@ proc makewindow {} {
 	-background $bgcolor -foreground $fgcolor \
 	-font mainfont \
 	-tabs [list $indent [expr {2 * $indent}]] \
-	-yscrollcommand ".bright.sb set" \
+	-xscrollcommand ".bright.sbx set" \
+	-yscrollcommand ".bright.sby set" \
 	-cursor [. cget -cursor] \
-	-spacing1 1 -spacing3 1
+	-spacing1 1 -spacing3 1 -wrap none
     lappend bglist $cflist
     lappend fglist $cflist
-    ${NS}::scrollbar .bright.sb -command "$cflist yview"
-    pack .bright.sb -side right -fill y
+    ${NS}::scrollbar .bright.sbx -orient horizontal -command "$cflist xview"
+    ${NS}::scrollbar .bright.sby -orient vertical   -command "$cflist yview"
+    pack .bright.sbx -side bottom -fill x
+    pack .bright.sby -side right -fill y
     pack $cflist -side left -fill both -expand 1
     $cflist tag configure highlight \
 	-background [$cflist cget -selectbackground]
