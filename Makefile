@@ -1,21 +1,23 @@
 # The default target of this Makefile is...
 all::
 
-prefix ?= $(HOME)
-bindir ?= $(prefix)/bin
-sharedir ?= $(prefix)/share
-gitk_libdir   ?= $(sharedir)/gitk/lib
-msgsdir    ?= $(gitk_libdir)/msgs
-msgsdir_SQ  = $(subst ','\'',$(msgsdir))
+prefix      ?= $(HOME)
+bindir      ?= $(prefix)/bin
+sharedir    ?= $(prefix)/share
+gitk_libdir ?= $(sharedir)/gitk/lib
+msgsdir     ?= $(gitk_libdir)/msgs
 
 TCL_PATH ?= tclsh
 TCLTK_PATH ?= wish
 INSTALL ?= install
 RM ?= rm -f
 
+-include config.mak
+
 DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
 bindir_SQ = $(subst ','\'',$(bindir))
 TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
+MSGSDIR_SQ  = $(subst ','\'',$(msgsdir))
 
 ### Detect Tck/Tk interpreter path changes
 TRACK_TCLTK = $(subst ','\'',-DTCLTK_PATH='$(TCLTK_PATH_SQ)')
@@ -52,11 +54,11 @@ all:: gitk-wish $(ALL_MSGFILES)
 install:: all
 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
 	$(INSTALL) -m 755 gitk-wish '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
-	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(msgsdir_SQ)'
-	$(foreach p,$(ALL_MSGFILES), $(INSTALL) -m 644 $p '$(DESTDIR_SQ)$(msgsdir_SQ)' &&) true
+	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(MSGSDIR_SQ)'
+	$(foreach p,$(ALL_MSGFILES), $(INSTALL) -m 644 $p '$(DESTDIR_SQ)$(MSGSDIR_SQ)' &&) true
 
 uninstall::
-	$(foreach p,$(ALL_MSGFILES), $(RM) '$(DESTDIR_SQ)$(msgsdir_SQ)'/$(notdir $p) &&) true
+	$(foreach p,$(ALL_MSGFILES), $(RM) '$(DESTDIR_SQ)$(MSGSDIR_SQ)'/$(notdir $p) &&) true
 	$(RM) '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
 
 clean::
